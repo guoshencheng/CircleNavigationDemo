@@ -20,7 +20,7 @@
     CircleNavigation *circle = [CircleNavigation create];
     circle.delegate = self;
     [self.view addSubview:circle];
-    [circle setupWithIcon:[UIImage imageNamed:@"RYOptionItem"] itemImages:@[[UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"]] radius:100 iconSize:CGSizeMake(32, 32) itemSize:CGSizeMake(32, 32)];
+    [circle setupWithIcon:[UIImage imageNamed:@"RYOptionItem"] itemImages:@[[UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"], [UIImage imageNamed:@"RYOptionItem"]] radius:80 iconSize:CGSizeMake(32, 32) itemSize:CGSizeMake(32, 32)];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

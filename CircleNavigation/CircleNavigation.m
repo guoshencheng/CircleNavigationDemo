@@ -33,10 +33,10 @@
 
 - (void)setupWithIcon:(UIImage *)image itemImages:(NSArray *)images radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize {
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(-120));
-        make.bottom.equalTo(@(120));
-        make.width.equalTo(@(320));
-        make.height.equalTo(@(320));
+        make.left.equalTo(@(-radius + size.width));
+        make.bottom.equalTo(@(radius - size.height));
+        make.width.equalTo(@(radius * 2));
+        make.height.equalTo(@(radius * 2));
     }];
     self.circleButtonWidthConstraint.constant = size.width;
     self.circleButtonHeightConstraint.constant = size.height;
@@ -64,10 +64,10 @@
 
 - (void)setup {
     [self layoutIfNeeded];
-    CGFloat averageAngle = M_PI_2 / self.itemImages.count;
+    CGFloat averageAngle = M_PI_2 / (self.itemImages.count - 1);
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.itemImages.count; i ++) {
-        CircleNavigationItem *item = [self createSigleItemWithAngle:(0.5 + i) * averageAngle image:[self.itemImages objectAtIndex:i]];
+        CircleNavigationItem *item = [self createSigleItemWithAngle:i * averageAngle image:[self.itemImages objectAtIndex:i]];
         item.tag = i;
         [array addObject:item];
     }
@@ -88,12 +88,12 @@
 - (IBAction)didClickNavigationIcon:(id)sender {
     if (self.isPackUp) {
         for (CircleNavigationItem *item in self.items) {
-            [item animateToTargetPostion];
+            [item animateToTargetPostionDelay:0];
         }
         self.isPackUp = NO;
     } else {
         for (CircleNavigationItem *item in self.items) {
-            [item animateToOriginPostion];
+            [item animateToOriginPostionDelay:0];
         }
         self.isPackUp = YES;
     }

@@ -60,23 +60,17 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
     }];
 }
 
-- (void)animateToTargetPostion {
+- (void)animateToTargetPostionDelay:(CGFloat)delay {
     self.hidden = NO;
-    POPSpringAnimation *animationX = [POPSpringAnimation new];
+    POPSpringAnimation *animationX = [self defalutOffsetSpringAnimationWithDelay:delay];
     animationX.toValue = @(self.targetPostion.x);
-    animationX.property = [POPMutableAnimatableProperty mas_offsetProperty];
-    animationX.springBounciness = 10;
-    animationX.springSpeed = 6;
     [self.centerXConstraint pop_addAnimation:animationX forKey:@"centerX"];
-    POPSpringAnimation *animationY = [POPSpringAnimation new];
+    POPSpringAnimation *animationY = [self defalutOffsetSpringAnimationWithDelay:delay];
     animationY.toValue = @(self.targetPostion.y);
-    animationY.property = [POPMutableAnimatableProperty mas_offsetProperty];
-    animationY.springBounciness = 10;
-    animationY.springSpeed = 6;
     [self.centerYConstraint pop_addAnimation:animationY forKey:@"centerY"];
 }
 
-- (void)animateToOriginPostion {
+- (void)animateToOriginPostionDelay:(CGFloat)delay {
     [UIView animateWithDuration:0.2 animations:^{
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
             self.centerXConstraint = make.centerX.equalTo(self.superview).offset(0);
@@ -91,6 +85,16 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 #pragma mark - LiveCycle
 
 #pragma mark - PrivateMethod
+
+- (POPSpringAnimation *)defalutOffsetSpringAnimationWithDelay:(CGFloat)delay {
+    POPSpringAnimation *animation = [POPSpringAnimation new];
+    animation.property = [POPMutableAnimatableProperty mas_offsetProperty];
+    animation.springBounciness = 10;
+    animation.springSpeed = 6;
+    animation.beginTime = CACurrentMediaTime() + delay;
+    return animation;
+}
+
 - (IBAction)didClickItem:(id)sender {
     if ([self.delegate respondsToSelector:@selector(circleNavigationItemDidClicked:)]) {
         [self.delegate circleNavigationItemDidClicked:self];

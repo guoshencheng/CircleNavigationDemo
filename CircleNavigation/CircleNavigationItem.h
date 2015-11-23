@@ -27,8 +27,8 @@
 + (instancetype)create;
 - (void)setupWithImage:(UIImage *)image;
 - (void)configureConstraintWithWidth:(CGFloat)width height:(CGFloat)height;
-- (void)animateToTargetPostion;
-- (void)animateToOriginPostion;
+- (void)animateToTargetPostionDelay:(CGFloat)delay;
+- (void)animateToOriginPostionDelay:(CGFloat)delay;
 
 @end
 
