@@ -31,7 +31,17 @@
     return circleNavigation;
 }
 
+- (void)clear {
+    if (!self.items) {
+        for (CircleNavigationItem *item in self.items) {
+            [item removeFromSuperview];
+        }
+        self.items = nil;
+    }
+}
+
 - (void)setupWithIcon:(UIImage *)image itemImages:(NSArray *)images radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize {
+    [self clear];
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(-radius + size.width));
         make.bottom.equalTo(@(radius - size.height));
