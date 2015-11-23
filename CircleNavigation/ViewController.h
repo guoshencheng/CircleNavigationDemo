@@ -6,10 +6,11 @@
 //  Copyright © 2015 guoshencheng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CircleNavigation.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CircleNavigationDelegate>
 
++ (instancetype)create;
 
 @end
 

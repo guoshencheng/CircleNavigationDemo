@@ -1,0 +1,2 @@
+pod 'Masonry'
+pod 'pop', '~> 1.0'
