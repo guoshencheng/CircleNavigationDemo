@@ -62,6 +62,8 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 
 - (void)animateToTargetPostionDelay:(CGFloat)delay {
     self.hidden = NO;
+    POPBasicAnimation *alphaAnimation = [self alphaAnimationWithDelay:delay fromAlpah:0 toAlpha:1];
+    [self pop_addAnimation:alphaAnimation forKey:@"alpha"];
     POPSpringAnimation *animationX = [self defalutOffsetSpringAnimationWithDelay:delay];
     animationX.toValue = @(self.targetPostion.x);
     [self.centerXConstraint pop_addAnimation:animationX forKey:@"centerX"];
@@ -71,6 +73,8 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 }
 
 - (void)animateToOriginPostionDelay:(CGFloat)delay {
+    POPBasicAnimation *alphaAnimation = [self alphaAnimationWithDelay:delay fromAlpah:1 toAlpha:0];
+    [self pop_addAnimation:alphaAnimation forKey:@"alpha"];
     [UIView animateWithDuration:0.2 animations:^{
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
             self.centerXConstraint = make.centerX.equalTo(self.superview).offset(0);
@@ -91,6 +95,15 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
     animation.property = [POPMutableAnimatableProperty mas_offsetProperty];
     animation.springBounciness = 10;
     animation.springSpeed = 6;
+    animation.beginTime = CACurrentMediaTime() + delay;
+    return animation;
+}
+
+- (POPBasicAnimation *)alphaAnimationWithDelay:(CGFloat)delay fromAlpah:(CGFloat)fromAlpha toAlpha:(CGFloat)toAlpha {
+    POPBasicAnimation *animation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    animation.fromValue = @(fromAlpha);
+    animation.toValue = @(toAlpha);
+    animation.duration = 1;
     animation.beginTime = CACurrentMediaTime() + delay;
     return animation;
 }

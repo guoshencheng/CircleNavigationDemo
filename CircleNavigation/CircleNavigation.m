@@ -43,15 +43,16 @@
 - (void)setupWithIcon:(UIImage *)image itemImages:(NSArray *)images radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize {
     [self clear];
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(-radius + size.width));
-        make.bottom.equalTo(@(radius - size.height));
-        make.width.equalTo(@(radius * 2));
-        make.height.equalTo(@(radius * 2));
+        make.left.equalTo(@(0));
+        make.bottom.equalTo(@(0));
+        make.width.equalTo(@(size.width));
+        make.height.equalTo(@(size.height));
     }];
     self.circleButtonWidthConstraint.constant = size.width;
     self.circleButtonHeightConstraint.constant = size.height;
     [self layoutIfNeeded];
     self.itemSize = itemSize;
+    self.iconSize = size;
     [self.circleButton setImage:image forState:UIControlStateNormal];
     self.itemImages = images;
     self.radius = radius;
@@ -97,11 +98,25 @@
 
 - (IBAction)didClickNavigationIcon:(id)sender {
     if (self.isPackUp) {
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@(-self.radius + self.iconSize.width / 2 - self.itemSize.width / 2));
+            make.bottom.equalTo(@(self.radius - self.iconSize.height / 2 + self.itemSize.height / 2));
+            make.width.equalTo(@(self.radius * 2 + self.itemSize.width));
+            make.height.equalTo(@(self.radius * 2 + self.itemSize.height));
+        }];
+        [self layoutIfNeeded];
         for (CircleNavigationItem *item in self.items) {
             [item animateToTargetPostionDelay:0];
         }
         self.isPackUp = NO;
     } else {
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@(0));
+            make.bottom.equalTo(@(0));
+            make.width.equalTo(@(self.iconSize.width));
+            make.height.equalTo(@(self.iconSize.height));
+        }];
+        [self layoutIfNeeded];
         for (CircleNavigationItem *item in self.items) {
             [item animateToOriginPostionDelay:0];
         }
