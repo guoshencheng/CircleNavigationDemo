@@ -1,4 +1,7 @@
 # CircleNavigationDemo
+
+![demo](./demo.gif)
+
 ###About
 This is a Demo for my Circle Navigation Components
 `CircleNavigationItem` and `CircleNavigation` are two core class
