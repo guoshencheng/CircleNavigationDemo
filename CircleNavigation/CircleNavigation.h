@@ -16,7 +16,13 @@
 @property (weak, nonatomic) id<CircleNavigationDelegate> delegate;
 
 + (instancetype)create;
-- (void)setupWithIcon:(UIImage *)image itemImages:(NSArray *)images radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize;
+- (void)setupWithIcon:(UIImage *)image
+      hightLightImage:(UIImage *)highLightImage
+           itemImages:(NSArray *)images
+      highLightImages:(NSArray *)hightLightImages
+               radius:(CGFloat)radius
+             iconSize:(CGSize)size
+             itemSize:(CGSize)itemSize offsetLeft:(CGFloat)offsetLeft offsetBottom:(CGFloat)offsetBottom;
 
 @end
 

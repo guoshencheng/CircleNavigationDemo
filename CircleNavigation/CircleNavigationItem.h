@@ -25,7 +25,7 @@
 @property (assign, nonatomic) CGPoint originPostion;
 
 + (instancetype)create;
-- (void)setupWithImage:(UIImage *)image;
+- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage;
 - (void)configureConstraintWithWidth:(CGFloat)width height:(CGFloat)height;
 - (void)animateToTargetPostionDelay:(CGFloat)delay;
 - (void)animateToOriginPostionDelay:(CGFloat)delay;

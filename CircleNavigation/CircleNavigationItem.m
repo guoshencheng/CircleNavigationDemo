@@ -46,8 +46,9 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
     return circleNavigationItem;
 }
 
-- (void)setupWithImage:(UIImage *)image {
+- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage {
     [self.itemButton setImage:image forState:UIControlStateNormal];
+    [self.itemButton setImage:highLightImage forState:UIControlStateHighlighted];
 }
 
 - (void)configureConstraintWithWidth:(CGFloat)width height:(CGFloat)height {

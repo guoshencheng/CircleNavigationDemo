@@ -16,6 +16,9 @@
 @property (assign, nonatomic) CGFloat radius;
 @property (assign, nonatomic) CGSize iconSize;
 @property (assign, nonatomic) CGSize itemSize;
+@property (assign, nonatomic) CGFloat offsetLeft;
+@property (assign, nonatomic) CGFloat offsetBottom;
+@property (strong, nonatomic) NSArray *highLightItemImages;
 @property (strong, nonatomic) NSArray *itemImages;
 @property (strong, nonatomic) NSArray *items;
 
@@ -40,21 +43,25 @@
     }
 }
 
-- (void)setupWithIcon:(UIImage *)image itemImages:(NSArray *)images radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize {
+- (void)setupWithIcon:(UIImage *)image hightLightImage:(UIImage *)highLightImage itemImages:(NSArray *)images highLightImages:(NSArray *)highLightImages radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize offsetLeft:(CGFloat)offsetLeft offsetBottom:(CGFloat)offsetBottom {
     [self clear];
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(0));
-        make.bottom.equalTo(@(0));
+        make.left.equalTo(@(offsetLeft));
+        make.bottom.equalTo(@(-offsetBottom));
         make.width.equalTo(@(size.width));
         make.height.equalTo(@(size.height));
     }];
+    self.offsetLeft = offsetLeft;
+    self.offsetBottom = offsetBottom;
     self.circleButtonWidthConstraint.constant = size.width;
     self.circleButtonHeightConstraint.constant = size.height;
     [self layoutIfNeeded];
     self.itemSize = itemSize;
     self.iconSize = size;
     [self.circleButton setImage:image forState:UIControlStateNormal];
+    [self.circleButton setImage:highLightImage forState:UIControlStateHighlighted];
     self.itemImages = images;
+    self.highLightItemImages = highLightImages;
     self.radius = radius;
     [self setup];
 }
@@ -78,16 +85,16 @@
     CGFloat averageAngle = M_PI_2 / (self.itemImages.count - 1);
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.itemImages.count; i ++) {
-        CircleNavigationItem *item = [self createSigleItemWithAngle:i * averageAngle image:[self.itemImages objectAtIndex:i]];
+        CircleNavigationItem *item = [self createSigleItemWithAngle:i * averageAngle image:[self.itemImages objectAtIndex:i] highLightImage:[self.highLightItemImages objectAtIndex:i]];
         item.tag = i;
         [array addObject:item];
     }
     self.items = array;
 }
 
-- (CircleNavigationItem *)createSigleItemWithAngle:(CGFloat)angle image:(UIImage *)image {
+- (CircleNavigationItem *)createSigleItemWithAngle:(CGFloat)angle image:(UIImage *)image highLightImage:(UIImage *)hightLightImage {
     CircleNavigationItem *item = [CircleNavigationItem create];
-    [item setupWithImage:image];
+    [item setupWithImage:image highLightImage:hightLightImage];
     item.targetPostion = CGPointMake(self.radius * sin(angle), - self.radius * cos(angle));
     [self insertSubview:item atIndex:0];
     [item configureConstraintWithWidth:self.itemSize.width height:self.itemSize.height];
@@ -99,8 +106,8 @@
 - (IBAction)didClickNavigationIcon:(id)sender {
     if (self.isPackUp) {
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(-self.radius + self.iconSize.width / 2 - self.itemSize.width / 2));
-            make.bottom.equalTo(@(self.radius - self.iconSize.height / 2 + self.itemSize.height / 2));
+            make.left.equalTo(@(-self.radius + self.iconSize.width / 2 - self.itemSize.width / 2 + self.offsetLeft));
+            make.bottom.equalTo(@(self.radius - self.iconSize.height / 2 + self.itemSize.height / 2 - self.offsetBottom));
             make.width.equalTo(@(self.radius * 2 + self.itemSize.width));
             make.height.equalTo(@(self.radius * 2 + self.itemSize.height));
         }];
@@ -111,8 +118,8 @@
         self.isPackUp = NO;
     } else {
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(0));
-            make.bottom.equalTo(@(0));
+            make.left.equalTo(@(self.offsetLeft));
+            make.bottom.equalTo(@(- self.offsetBottom));
             make.width.equalTo(@(self.iconSize.width));
             make.height.equalTo(@(self.iconSize.height));
         }];
