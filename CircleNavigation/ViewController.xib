@@ -14,8 +14,26 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AvT-kd-XJp">
+                    <rect key="frame" x="145" y="269" width="30" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="MlE-cd-7dd"/>
+                        <constraint firstAttribute="width" constant="30" id="QmJ-uR-RpV"/>
+                    </constraints>
+                    <state key="normal" title="to 2"/>
+                    <connections>
+                        <action selector="toTwo:" destination="-1" eventType="touchUpInside" id="R9R-y3-4PU"/>
+                    </connections>
+                </button>
+            </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="AvT-kd-XJp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Nsr-sv-pmi"/>
+                <constraint firstItem="AvT-kd-XJp" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SJa-jX-2gs"/>
+            </constraints>
             <point key="canvasLocation" x="246" y="357"/>
         </view>
     </objects>

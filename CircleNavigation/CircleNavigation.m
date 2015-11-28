@@ -10,9 +10,8 @@
 
 @interface CircleNavigation()
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleButtonHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet UIButton *circleButton;
+@property (strong, nonatomic) UIWindow *circleNaviWindow;
+@property (strong, nonatomic) UIButton *circleButton;
 @property (assign, nonatomic) CGFloat radius;
 @property (assign, nonatomic) CGSize iconSize;
 @property (assign, nonatomic) CGSize itemSize;
@@ -21,6 +20,7 @@
 @property (strong, nonatomic) NSArray *highLightItemImages;
 @property (strong, nonatomic) NSArray *itemImages;
 @property (strong, nonatomic) NSArray *items;
+@property (strong, nonatomic) UIWindow *actionWindow;
 
 @end
 
@@ -29,9 +29,26 @@
 #pragma mark - PublicMethod
 
 + (instancetype)create {
-    CircleNavigation *circleNavigation = [[[NSBundle mainBundle] loadNibNamed:@"CircleNavigation" owner:nil options:nil] lastObject];
+    CircleNavigation *circleNavigation = [[CircleNavigation alloc] init];
     circleNavigation.translatesAutoresizingMaskIntoConstraints = NO;
     return circleNavigation;
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.circleButton = [[UIButton alloc] init];
+        [self addSubview:self.circleButton];
+        [self.circleButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@(0));
+            make.bottom.equalTo(@(0));
+            make.width.equalTo(@(20));
+            make.height.equalTo(@(20));
+        }];
+        self.isPackUp = YES;
+        self.circleButton.layer.cornerRadius = self.circleButton.frame.size.width / 2;
+        [self.circleButton addTarget:self action:@selector(didClickNavigationIcon:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return self;
 }
 
 - (void)clear {
@@ -53,8 +70,7 @@
     }];
     self.offsetLeft = offsetLeft;
     self.offsetBottom = offsetBottom;
-    self.circleButtonWidthConstraint.constant = size.width;
-    self.circleButtonHeightConstraint.constant = size.height;
+    [self updateCircleButtonWithHeight:size.height width:size.width];
     [self layoutIfNeeded];
     self.itemSize = itemSize;
     self.iconSize = size;
@@ -68,17 +84,19 @@
 
 #pragma mark - LiveCycle
 
-- (void)awakeFromNib {
-    self.isPackUp = YES;
-    self.circleButton.layer.cornerRadius = self.circleButton.frame.size.width / 2;
-}
-
 - (void)layoutIfNeeded {
     [super layoutIfNeeded];
     self.circleButton.layer.cornerRadius = self.circleButton.frame.size.width / 2;
 }
 
 #pragma mark - PrivateMethod
+
+- (void)updateCircleButtonWithHeight:(CGFloat)height width:(CGFloat)width {
+    [self.circleButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(width));
+        make.height.equalTo(@(height));
+    }];
+}
 
 - (void)setup {
     [self layoutIfNeeded];
@@ -95,7 +113,10 @@
 - (CircleNavigationItem *)createSigleItemWithAngle:(CGFloat)angle image:(UIImage *)image highLightImage:(UIImage *)hightLightImage {
     CircleNavigationItem *item = [CircleNavigationItem create];
     [item setupWithImage:image highLightImage:hightLightImage];
-    item.targetPostion = CGPointMake(self.radius * sin(angle), - self.radius * cos(angle));
+    CGFloat offsetX = (self.iconSize.width - self.itemSize.width) / 2;
+    CGFloat offsetY = (self.iconSize.height - self.itemSize.height) / 2;
+    item.targetPostion = CGPointMake(self.radius * sin(angle) + offsetX, self.radius * cos(angle) + offsetY);
+    item.originPostion = CGPointMake(offsetX, offsetY);
     [self insertSubview:item atIndex:0];
     [item configureConstraintWithWidth:self.itemSize.width height:self.itemSize.height];
     item.delegate = self;
@@ -103,32 +124,38 @@
     return item;
 }
 
-- (IBAction)didClickNavigationIcon:(id)sender {
+- (void)didClickNavigationIcon:(id)sender {
     if (self.isPackUp) {
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(-self.radius + self.iconSize.width / 2 - self.itemSize.width / 2 + self.offsetLeft));
-            make.bottom.equalTo(@(self.radius - self.iconSize.height / 2 + self.itemSize.height / 2 - self.offsetBottom));
-            make.width.equalTo(@(self.radius * 2 + self.itemSize.width));
-            make.height.equalTo(@(self.radius * 2 + self.itemSize.height));
-        }];
-        [self layoutIfNeeded];
-        for (CircleNavigationItem *item in self.items) {
-            [item animateToTargetPostionDelay:0];
-        }
-        self.isPackUp = NO;
+        [self animateToOpen];
     } else {
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(self.offsetLeft));
-            make.bottom.equalTo(@(- self.offsetBottom));
-            make.width.equalTo(@(self.iconSize.width));
-            make.height.equalTo(@(self.iconSize.height));
-        }];
-        [self layoutIfNeeded];
-        for (CircleNavigationItem *item in self.items) {
-            [item animateToOriginPostionDelay:0];
-        }
-        self.isPackUp = YES;
+        [self animateToPackUp];
     }
+}
+
+- (void)animateToPackUp {
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(self.offsetLeft));
+        make.bottom.equalTo(@(- self.offsetBottom));
+        make.width.equalTo(@(self.iconSize.width));
+        make.height.equalTo(@(self.iconSize.height));
+    }];
+    [self layoutIfNeeded];
+    for (CircleNavigationItem *item in self.items) {
+        [item animateToOriginPostionDelay:0];
+    }
+    self.isPackUp = YES;
+}
+
+- (void)animateToOpen {
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(self.radius + self.itemSize.width / 2));
+        make.height.equalTo(@(self.radius + self.itemSize.height / 2));
+    }];
+    [self layoutIfNeeded];
+    for (CircleNavigationItem *item in self.items) {
+        [item animateToTargetPostionDelay:0];
+    }
+    self.isPackUp = NO;
 }
 
 #pragma mark - CircleNavigationItemDelegate

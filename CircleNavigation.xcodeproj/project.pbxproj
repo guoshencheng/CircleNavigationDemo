@@ -17,6 +17,8 @@
 		2E163B241C05972F00121D9F /* home_system_message_high_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E163B1A1C05972F00121D9F /* home_system_message_high_light@2x.png */; };
 		2E163B251C05972F00121D9F /* home_user_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E163B1B1C05972F00121D9F /* home_user_info@2x.png */; };
 		2E163B261C05972F00121D9F /* home_user_info_high_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E163B1C1C05972F00121D9F /* home_user_info_high_light@2x.png */; };
+		2E47027C1C09618800B3BF05 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E47027B1C09618800B3BF05 /* ViewController2.m */; };
+		2E47027E1C0961A900B3BF05 /* ViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E47027D1C0961A800B3BF05 /* ViewController2.xib */; };
 		2E973DAB1AAA06E8C43CF3C7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D1961D2FA064BCEF82B2B7 /* libPods.a */; };
 		2EC882E91C02A22200EEE8D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC882E81C02A22200EEE8D5 /* main.m */; };
 		2EC882EC1C02A22200EEE8D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC882EB1C02A22200EEE8D5 /* AppDelegate.m */; };
@@ -26,9 +28,7 @@
 		2EC882FA1C02A22200EEE8D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EC882F81C02A22200EEE8D5 /* LaunchScreen.storyboard */; };
 		2EC883021C02A24700EEE8D5 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EC883011C02A24700EEE8D5 /* ViewController.xib */; };
 		2EC883051C02A65800EEE8D5 /* CircleNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC883041C02A65800EEE8D5 /* CircleNavigation.m */; };
-		2EC883071C02A6FF00EEE8D5 /* CircleNavigation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EC883061C02A6FF00EEE8D5 /* CircleNavigation.xib */; };
 		2EC8830A1C02ABF700EEE8D5 /* CircleNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC883091C02ABF700EEE8D5 /* CircleNavigationItem.m */; };
-		2EC8830C1C02AC0800EEE8D5 /* CircleNavigationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EC8830B1C02AC0800EEE8D5 /* CircleNavigationItem.xib */; };
 		2EC8830E1C02D61800EEE8D5 /* RYOptionItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EC8830D1C02D61800EEE8D5 /* RYOptionItem@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +43,9 @@
 		2E163B1A1C05972F00121D9F /* home_system_message_high_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_system_message_high_light@2x.png"; sourceTree = "<group>"; };
 		2E163B1B1C05972F00121D9F /* home_user_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_user_info@2x.png"; sourceTree = "<group>"; };
 		2E163B1C1C05972F00121D9F /* home_user_info_high_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_user_info_high_light@2x.png"; sourceTree = "<group>"; };
+		2E47027A1C09618800B3BF05 /* ViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
+		2E47027B1C09618800B3BF05 /* ViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
+		2E47027D1C0961A800B3BF05 /* ViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController2.xib; sourceTree = "<group>"; };
 		2EC882E41C02A22200EEE8D5 /* CircleNavigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircleNavigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC882E81C02A22200EEE8D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2EC882EA1C02A22200EEE8D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -56,10 +59,8 @@
 		2EC883011C02A24700EEE8D5 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		2EC883031C02A65800EEE8D5 /* CircleNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleNavigation.h; sourceTree = "<group>"; };
 		2EC883041C02A65800EEE8D5 /* CircleNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleNavigation.m; sourceTree = "<group>"; };
-		2EC883061C02A6FF00EEE8D5 /* CircleNavigation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNavigation.xib; sourceTree = "<group>"; };
 		2EC883081C02ABF700EEE8D5 /* CircleNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleNavigationItem.h; sourceTree = "<group>"; };
 		2EC883091C02ABF700EEE8D5 /* CircleNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleNavigationItem.m; sourceTree = "<group>"; };
-		2EC8830B1C02AC0800EEE8D5 /* CircleNavigationItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNavigationItem.xib; sourceTree = "<group>"; };
 		2EC8830D1C02D61800EEE8D5 /* RYOptionItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RYOptionItem@2x.png"; sourceTree = "<group>"; };
 		43BEEA58CCF074796E9B7F97 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		64D1961D2FA064BCEF82B2B7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,15 +129,16 @@
 				2EC8830D1C02D61800EEE8D5 /* RYOptionItem@2x.png */,
 				2EC883081C02ABF700EEE8D5 /* CircleNavigationItem.h */,
 				2EC883091C02ABF700EEE8D5 /* CircleNavigationItem.m */,
-				2EC8830B1C02AC0800EEE8D5 /* CircleNavigationItem.xib */,
 				2EC883031C02A65800EEE8D5 /* CircleNavigation.h */,
 				2EC883041C02A65800EEE8D5 /* CircleNavigation.m */,
-				2EC883061C02A6FF00EEE8D5 /* CircleNavigation.xib */,
 				2EC882EA1C02A22200EEE8D5 /* AppDelegate.h */,
 				2EC882EB1C02A22200EEE8D5 /* AppDelegate.m */,
 				2EC882ED1C02A22200EEE8D5 /* ViewController.h */,
 				2EC882EE1C02A22200EEE8D5 /* ViewController.m */,
 				2EC883011C02A24700EEE8D5 /* ViewController.xib */,
+				2E47027A1C09618800B3BF05 /* ViewController2.h */,
+				2E47027B1C09618800B3BF05 /* ViewController2.m */,
+				2E47027D1C0961A800B3BF05 /* ViewController2.xib */,
 				2EC882F61C02A22200EEE8D5 /* Assets.xcassets */,
 				2EC882F81C02A22200EEE8D5 /* LaunchScreen.storyboard */,
 				2EC882FB1C02A22200EEE8D5 /* Info.plist */,
@@ -223,7 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EC8830C1C02AC0800EEE8D5 /* CircleNavigationItem.xib in Resources */,
+				2E47027E1C0961A900B3BF05 /* ViewController2.xib in Resources */,
 				2E163B211C05972F00121D9F /* home_search@2x.png in Resources */,
 				2E163B221C05972F00121D9F /* home_search_high_light@2x.png in Resources */,
 				2EC882FA1C02A22200EEE8D5 /* LaunchScreen.storyboard in Resources */,
@@ -238,7 +240,6 @@
 				2E163B1F1C05972F00121D9F /* home_edit_content.png in Resources */,
 				2E163B1E1C05972F00121D9F /* circlebar_high_light@2x.png in Resources */,
 				2EC882F71C02A22200EEE8D5 /* Assets.xcassets in Resources */,
-				2EC883071C02A6FF00EEE8D5 /* CircleNavigation.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E47027C1C09618800B3BF05 /* ViewController2.m in Sources */,
 				2EC882EF1C02A22200EEE8D5 /* ViewController.m in Sources */,
 				2EC882EC1C02A22200EEE8D5 /* AppDelegate.m in Sources */,
 				2EC882E91C02A22200EEE8D5 /* main.m in Sources */,

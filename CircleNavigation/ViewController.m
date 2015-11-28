@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ViewController2.h"
 #import "Masonry.h"
 
 @implementation ViewController
@@ -17,15 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    CircleNavigation *circle = [CircleNavigation create];
-    circle.delegate = self;
-    [self.view addSubview:circle];
-    [circle setupWithIcon:[UIImage imageNamed:@"circlebar"] hightLightImage:[UIImage imageNamed:@"circlebar_high_light"] itemImages:[self itemArray] highLightImages:[self highLightItemArray] radius:120 iconSize:CGSizeMake(52, 57) itemSize:CGSizeMake(51, 51) offsetLeft:20 offsetBottom:20];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)toTwo:(id)sender {
+    [self.navigationController pushViewController:[ViewController2 create] animated:YES];
 }
 
 - (NSArray *)itemArray {
