@@ -23,9 +23,10 @@
 @property (weak, nonatomic) id<CircleNavigationItemDelegate>delegate;
 @property (assign, nonatomic) CGPoint targetPostion;
 @property (assign, nonatomic) CGPoint originPostion;
+@property (assign, nonatomic) CGFloat angle;
 
 + (instancetype)create;
-- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage;
+- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage title:(NSString *)title;
 - (void)configureConstraintWithWidth:(CGFloat)width height:(CGFloat)height;
 - (void)animateToTargetPostionDelay:(CGFloat)delay;
 - (void)animateToOriginPostionDelay:(CGFloat)delay;

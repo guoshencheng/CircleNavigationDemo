@@ -10,7 +10,13 @@
 
 @interface CircleNavigationItem()
 
-@property (strong, nonatomic) UIButton *itemButton;
+@property (weak, nonatomic) IBOutlet UIImageView *itemImageView;
+@property (weak, nonatomic) IBOutlet UIView *labelViewContainerView;
+@property (weak, nonatomic) IBOutlet UIButton *itemButton;
+@property (weak, nonatomic) IBOutlet UIView *labelView;
+@property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelViewLeftConstraint;
+
 @property (strong, nonatomic) MASConstraint *leftConstraint;
 @property (strong, nonatomic) MASConstraint *bottomConstraint;
 
@@ -41,27 +47,15 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 #pragma mark - PublicMethod
 
 + (instancetype)create {
-    CircleNavigationItem *circleNavigationItem = [[CircleNavigationItem alloc] init];
+    CircleNavigationItem *circleNavigationItem = [[[NSBundle mainBundle] loadNibNamed:@"CircleNavigationItem" owner:nil options:nil] lastObject];
     circleNavigationItem.translatesAutoresizingMaskIntoConstraints = NO;
     return circleNavigationItem;
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
-        self.itemButton = [[UIButton alloc] init];
-        [self addSubview:self.itemButton];
-        [self.itemButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(0));
-            make.right.equalTo(@(0));
-            make.top.equalTo(@(0));
-            make.bottom.equalTo(@(0));
-        }];
-    }
-    return self;
-}
-
-- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage {
+- (void)setupWithImage:(UIImage *)image highLightImage:(UIImage *)highLightImage title:(NSString *)title {
+    self.itemImageView.backgroundColor = [UIColor clearColor];
     [self.itemButton setImage:image forState:UIControlStateNormal];
+    self.label.text = title;
     [self.itemButton setImage:highLightImage forState:UIControlStateHighlighted];
 }
 
@@ -74,11 +68,21 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
         make.width.equalTo(@(width));
         make.height.equalTo(@(height));
     }];
+    self.labelViewLeftConstraint.constant = -80;
+    [self layoutIfNeeded];
+    self.layer.cornerRadius = self.frame.size.height / 2;
+    self.labelViewContainerView.layer.cornerRadius = self.frame.size.height / 2;
+    self.itemButton.transform = CGAffineTransformMakeRotation(M_PI_2 - self.angle);
+    self.transform = CGAffineTransformMakeRotation(self.angle - M_PI_2);
+    self.labelView.layer.cornerRadius = self.labelView.frame.size.height / 2;
 }
 
 - (void)animateToTargetPostionDelay:(CGFloat)delay {
     self.hidden = NO;
     POPBasicAnimation *alphaAnimation = [self alphaAnimationWithDelay:delay fromAlpah:0 toAlpha:1];
+    alphaAnimation.completionBlock = ^(POPAnimation *anim, BOOL finished) {
+        [self springAnimatePopLabelView];
+    };
     [self pop_addAnimation:alphaAnimation forKey:@"alpha"];
     POPSpringAnimation *animationX = [self defalutOffsetSpringAnimationWithDelay:delay];
     animationX.toValue = @(self.targetPostion.x);
@@ -89,17 +93,19 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 }
 
 - (void)animateToOriginPostionDelay:(CGFloat)delay {
-    POPBasicAnimation *alphaAnimation = [self alphaAnimationWithDelay:delay fromAlpah:1 toAlpha:0];
-    [self pop_addAnimation:alphaAnimation forKey:@"alpha"];
-    [UIView animateWithDuration:0.2 animations:^{
-        __weak typeof(self) weakSelf = self;
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            self.leftConstraint = make.left.equalTo(@(weakSelf.originPostion.x));
-            self.bottomConstraint = make.bottom.equalTo(@(-weakSelf.originPostion.y));
+    self.labelViewLeftConstraint.constant = 20;
+    [self baseAnimatePopLabelViewWithBlock:^(POPAnimation *anim, BOOL finished) {
+        [UIView animateWithDuration:0.2 animations:^{
+            __weak typeof(self) weakSelf = self;
+            [self mas_updateConstraints:^(MASConstraintMaker *make) {
+                self.leftConstraint = make.left.equalTo(@(weakSelf.originPostion.x));
+                self.bottomConstraint = make.bottom.equalTo(@(-weakSelf.originPostion.y));
+            }];
+            self.alpha = 0;
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            self.hidden = YES;
         }];
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.hidden = YES;
     }];
 }
 
@@ -110,17 +116,33 @@ CGFloat getLayoutConstant(MASConstraint* constraint) {
 - (POPSpringAnimation *)defalutOffsetSpringAnimationWithDelay:(CGFloat)delay {
     POPSpringAnimation *animation = [POPSpringAnimation new];
     animation.property = [POPMutableAnimatableProperty mas_offsetProperty];
-    animation.springBounciness = 10;
-    animation.springSpeed = 6;
+    animation.springBounciness = 15.0f;
+    animation.springSpeed = 40.0f;
     animation.beginTime = CACurrentMediaTime() + delay;
     return animation;
+}
+
+- (void)baseAnimatePopLabelViewWithBlock:(void (^)(POPAnimation *anim, BOOL finished))block{
+    POPBasicAnimation *layoutAnimation = [POPBasicAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+    layoutAnimation.duration = 0.1;
+    layoutAnimation.toValue = @(-80);
+    layoutAnimation.completionBlock = block;
+    [self.labelViewLeftConstraint pop_addAnimation:layoutAnimation forKey:@"leftConstraint"];
+}
+
+- (void)springAnimatePopLabelView {
+    POPSpringAnimation *layoutAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+    layoutAnimation.springSpeed = 30.0f;
+    layoutAnimation.springBounciness = 5.0f;
+    layoutAnimation.toValue = @(20);
+    [self.labelViewLeftConstraint pop_addAnimation:layoutAnimation forKey:@"leftConstraint"];
 }
 
 - (POPBasicAnimation *)alphaAnimationWithDelay:(CGFloat)delay fromAlpah:(CGFloat)fromAlpha toAlpha:(CGFloat)toAlpha {
     POPBasicAnimation *animation = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
     animation.fromValue = @(fromAlpha);
     animation.toValue = @(toAlpha);
-    animation.duration = 1;
+    animation.duration = 0.4;
     animation.beginTime = CACurrentMediaTime() + delay;
     return animation;
 }

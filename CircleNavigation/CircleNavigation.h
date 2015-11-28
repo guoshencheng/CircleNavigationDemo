@@ -19,6 +19,7 @@
 - (void)setupWithIcon:(UIImage *)image
       hightLightImage:(UIImage *)highLightImage
            itemImages:(NSArray *)images
+               titles:(NSArray *)titles
       highLightImages:(NSArray *)hightLightImages
                radius:(CGFloat)radius
              iconSize:(CGSize)size

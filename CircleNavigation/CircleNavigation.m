@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSArray *highLightItemImages;
 @property (strong, nonatomic) NSArray *itemImages;
 @property (strong, nonatomic) NSArray *items;
+@property (strong, nonatomic) NSArray *titles;
 @property (strong, nonatomic) UIWindow *actionWindow;
 
 @end
@@ -60,7 +61,7 @@
     }
 }
 
-- (void)setupWithIcon:(UIImage *)image hightLightImage:(UIImage *)highLightImage itemImages:(NSArray *)images highLightImages:(NSArray *)highLightImages radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize offsetLeft:(CGFloat)offsetLeft offsetBottom:(CGFloat)offsetBottom {
+- (void)setupWithIcon:(UIImage *)image hightLightImage:(UIImage *)highLightImage itemImages:(NSArray *)images titles:(NSArray *)titles highLightImages:(NSArray *)highLightImages radius:(CGFloat)radius iconSize:(CGSize)size itemSize:(CGSize)itemSize offsetLeft:(CGFloat)offsetLeft offsetBottom:(CGFloat)offsetBottom {
     [self clear];
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(offsetLeft));
@@ -74,6 +75,7 @@
     [self layoutIfNeeded];
     self.itemSize = itemSize;
     self.iconSize = size;
+    self.titles = titles;
     [self.circleButton setImage:image forState:UIControlStateNormal];
     [self.circleButton setImage:highLightImage forState:UIControlStateHighlighted];
     self.itemImages = images;
@@ -103,20 +105,21 @@
     CGFloat averageAngle = M_PI_2 / (self.itemImages.count - 1);
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.itemImages.count; i ++) {
-        CircleNavigationItem *item = [self createSigleItemWithAngle:i * averageAngle image:[self.itemImages objectAtIndex:i] highLightImage:[self.highLightItemImages objectAtIndex:i]];
+        CircleNavigationItem *item = [self createSigleItemWithAngle:i * averageAngle image:[self.itemImages objectAtIndex:i] highLightImage:[self.highLightItemImages objectAtIndex:i] title:[self.titles objectAtIndex:i]];
         item.tag = i;
         [array addObject:item];
     }
     self.items = array;
 }
 
-- (CircleNavigationItem *)createSigleItemWithAngle:(CGFloat)angle image:(UIImage *)image highLightImage:(UIImage *)hightLightImage {
+- (CircleNavigationItem *)createSigleItemWithAngle:(CGFloat)angle image:(UIImage *)image highLightImage:(UIImage *)hightLightImage title:(NSString *)title{
     CircleNavigationItem *item = [CircleNavigationItem create];
-    [item setupWithImage:image highLightImage:hightLightImage];
+    [item setupWithImage:image highLightImage:hightLightImage title:title];
     CGFloat offsetX = (self.iconSize.width - self.itemSize.width) / 2;
     CGFloat offsetY = (self.iconSize.height - self.itemSize.height) / 2;
     item.targetPostion = CGPointMake(self.radius * sin(angle) + offsetX, self.radius * cos(angle) + offsetY);
     item.originPostion = CGPointMake(offsetX, offsetY);
+    item.angle = angle;
     [self insertSubview:item atIndex:0];
     [item configureConstraintWithWidth:self.itemSize.width height:self.itemSize.height];
     item.delegate = self;
@@ -148,8 +151,8 @@
 
 - (void)animateToOpen {
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@(self.radius + self.itemSize.width / 2));
-        make.height.equalTo(@(self.radius + self.itemSize.height / 2));
+        make.width.equalTo(@(self.radius + self.itemSize.width));
+        make.height.equalTo(@(self.radius + self.itemSize.height));
     }];
     [self layoutIfNeeded];
     for (CircleNavigationItem *item in self.items) {
@@ -161,6 +164,7 @@
 #pragma mark - CircleNavigationItemDelegate
 
 - (void)circleNavigationItemDidClicked:(CircleNavigationItem *)circleNavigationItem {
+    [self animateToPackUp];
     if ([self.delegate respondsToSelector:@selector(circleNavigation:didClickItemAtIndex:)]) {
         [self.delegate circleNavigation:self didClickItemAtIndex:circleNavigationItem.tag];
     }

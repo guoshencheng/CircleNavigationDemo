@@ -19,6 +19,7 @@
 		2E163B261C05972F00121D9F /* home_user_info_high_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E163B1C1C05972F00121D9F /* home_user_info_high_light@2x.png */; };
 		2E47027C1C09618800B3BF05 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E47027B1C09618800B3BF05 /* ViewController2.m */; };
 		2E47027E1C0961A900B3BF05 /* ViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E47027D1C0961A800B3BF05 /* ViewController2.xib */; };
+		2E4702801C09721100B3BF05 /* CircleNavigationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E47027F1C09721100B3BF05 /* CircleNavigationItem.xib */; };
 		2E973DAB1AAA06E8C43CF3C7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64D1961D2FA064BCEF82B2B7 /* libPods.a */; };
 		2EC882E91C02A22200EEE8D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC882E81C02A22200EEE8D5 /* main.m */; };
 		2EC882EC1C02A22200EEE8D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC882EB1C02A22200EEE8D5 /* AppDelegate.m */; };
@@ -46,6 +47,7 @@
 		2E47027A1C09618800B3BF05 /* ViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
 		2E47027B1C09618800B3BF05 /* ViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
 		2E47027D1C0961A800B3BF05 /* ViewController2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController2.xib; sourceTree = "<group>"; };
+		2E47027F1C09721100B3BF05 /* CircleNavigationItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNavigationItem.xib; sourceTree = "<group>"; };
 		2EC882E41C02A22200EEE8D5 /* CircleNavigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircleNavigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC882E81C02A22200EEE8D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2EC882EA1C02A22200EEE8D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				2EC8830D1C02D61800EEE8D5 /* RYOptionItem@2x.png */,
 				2EC883081C02ABF700EEE8D5 /* CircleNavigationItem.h */,
 				2EC883091C02ABF700EEE8D5 /* CircleNavigationItem.m */,
+				2E47027F1C09721100B3BF05 /* CircleNavigationItem.xib */,
 				2EC883031C02A65800EEE8D5 /* CircleNavigation.h */,
 				2EC883041C02A65800EEE8D5 /* CircleNavigation.m */,
 				2EC882EA1C02A22200EEE8D5 /* AppDelegate.h */,
@@ -235,6 +238,7 @@
 				2EC883021C02A24700EEE8D5 /* ViewController.xib in Resources */,
 				2E163B231C05972F00121D9F /* home_system_message.png in Resources */,
 				2EC8830E1C02D61800EEE8D5 /* RYOptionItem@2x.png in Resources */,
+				2E4702801C09721100B3BF05 /* CircleNavigationItem.xib in Resources */,
 				2E163B261C05972F00121D9F /* home_user_info_high_light@2x.png in Resources */,
 				2E163B241C05972F00121D9F /* home_system_message_high_light@2x.png in Resources */,
 				2E163B1F1C05972F00121D9F /* home_edit_content.png in Resources */,
